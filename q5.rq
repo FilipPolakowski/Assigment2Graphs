@@ -1,0 +1,46 @@
+PREFIX schema: <https://schema.org/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+SELECT ?dimension (COUNT(?recipeWithInfo) AS ?recipesWithInfo)
+WHERE {
+
+  # Who
+  {
+    BIND("Who" AS ?dimension)
+    ?recipe a schema:Recipe .
+    OPTIONAL { ?recipe prov:wasAttributedTo ?agent
+               BIND(?recipe AS ?recipeWithInfo) }
+  }
+
+  UNION
+
+  # When
+  {
+    BIND("When" AS ?dimension)
+    ?recipe a schema:Recipe .
+    OPTIONAL { ?recipe schema:datePublished ?date
+               BIND(?recipe AS ?recipeWithInfo) }
+  }
+
+  UNION
+
+  # Where
+  {
+    BIND("Where" AS ?dimension)
+    ?recipe a schema:Recipe .
+    OPTIONAL { ?recipe prov:atLocation ?location
+               BIND(?recipe AS ?recipeWithInfo) }
+  }
+
+  UNION
+
+  # How
+  {
+    BIND("How" AS ?dimension)
+    ?recipe a schema:Recipe .
+    OPTIONAL { ?recipe prov:wasGeneratedBy ?activity
+               BIND(?recipe AS ?recipeWithInfo) }
+  }
+}
+GROUP BY ?dimension
+ORDER BY ?dimension
