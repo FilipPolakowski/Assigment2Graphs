@@ -1,0 +1,14 @@
+PREFIX schema: <https://schema.org/>
+
+SELECT (COUNT(DISTINCT ?recipe) AS ?recipesMissingInstructions)
+WHERE {
+  ?recipe a schema:Recipe .
+  FILTER NOT EXISTS {
+    ?recipe schema:recipeInstructions ?inst .
+  }
+}
+
+# Completeness
+# Missing schema:recipeInstructions
+# Quality dimension: Completeness
+# The count returned by this query tells us how many recipes don't have any cooking instructions in them. Recipes without instructions make them less usable as they are incomplete recipe records.

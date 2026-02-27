@@ -1,0 +1,35 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT
+  (COUNT(?predicate) AS ?totalPredicates)
+  (SUM(
+    IF(
+      STRSTARTS(STR(?predicate), "http://www.w3.org/") ||
+      STRSTARTS(STR(?predicate), "http://schema.org/") ||
+      STRSTARTS(STR(?predicate), "https://schema.org/") ||
+      STRSTARTS(STR(?predicate), "http://dbpedia.org/ontology/"),
+      1,
+      0
+    )
+  ) AS ?standardPredicates)
+  ((SUM(
+    IF(
+      STRSTARTS(STR(?predicate), "http://www.w3.org/") ||
+      STRSTARTS(STR(?predicate), "http://schema.org/") ||
+      STRSTARTS(STR(?predicate), "https://schema.org/") ||
+      STRSTARTS(STR(?predicate), "http://dbpedia.org/ontology/"),
+      1,
+      0
+    )
+  ) * 100.0) / COUNT(?predicate) AS ?interoperabilityPercent)
+WHERE {
+  SELECT DISTINCT ?predicate
+  WHERE {
+    ?s ?predicate ?o .
+  }
+}
