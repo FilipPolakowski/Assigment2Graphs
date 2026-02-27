@@ -1,0 +1,7 @@
+SELECT DISTINCT ?uri
+WHERE {
+  ?uri ?p ?o .
+  FILTER(isIRI(?uri))
+  FILTER(STRSTARTS(STR(?uri), "http://kg-course/") || STRSTARTS(STR(?uri), "https://kg-course/"))
+}
+LIMIT 50
