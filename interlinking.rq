@@ -1,0 +1,19 @@
+PREFIX schema: <https://schema.org/>
+PREFIX owl:    <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?predicate (COUNT(?recipe) AS ?occurrences)
+WHERE {
+  ?recipe a schema:Recipe .
+  ?recipe ?predicate ?value .
+  FILTER NOT EXISTS {
+    { ?predicate a owl:DatatypeProperty }
+    UNION
+    { ?predicate a owl:ObjectProperty }
+    UNION
+    { ?predicate a rdf:Property }
+  }
+  FILTER(?predicate != rdf:type)
+}
+GROUP BY ?predicate
+ORDER BY DESC(?occurrences)
