@@ -1,0 +1,16 @@
+PREFIX schema: <https://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?recipe ?cal
+WHERE {
+  ?recipe a schema:Recipe .
+  ?recipe schema:nutrition ?n .
+  ?n schema:calories ?cal .
+
+  FILTER (?cal < 0 || ?cal > 5000)
+}
+
+# Contextual accuracy
+# Calorie values that are out of range
+# Quality dimension: Contextual accuracy
+# Each result returned by this query corresponds to a recipe whose calorie value falls outside a meaningful range (could be from data entry or unit conversion errors).
