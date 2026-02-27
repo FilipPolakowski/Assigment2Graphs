@@ -1,0 +1,16 @@
+#Accessibility - External linking
+#Check external entity linking through any property
+#Checking among triples where the subject is local and the object is an external IRI
+
+
+SELECT ?p (COUNT(*) AS ?count)
+WHERE {
+  ?s ?p ?o .
+  FILTER(isIRI(?s))
+  FILTER(isIRI(?o))
+  FILTER(STRSTARTS(STR(?s), "http://kg-course/food-nutrition/"))
+  FILTER(!STRSTARTS(STR(?o), "http://kg-course/food-nutrition/"))
+}
+GROUP BY ?p
+ORDER BY DESC(?count)
+LIMIT 30

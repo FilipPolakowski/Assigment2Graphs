@@ -1,0 +1,21 @@
+#Accessibility — Internal interlinking:
+#Checking about number of degrees around a node
+
+
+SELECT ?node (COUNT(*) AS ?totalDegree)
+WHERE {
+  {
+    ?node ?p ?o .
+    FILTER(isIRI(?node))
+  }
+  UNION
+  {
+    ?s ?p ?node .
+    FILTER(isIRI(?node))
+  }
+
+  FILTER(STRSTARTS(STR(?node), "http://kg-course/food-nutrition/"))
+}
+GROUP BY ?node
+ORDER BY DESC(?totalDegree)
+LIMIT 30

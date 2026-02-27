@@ -1,0 +1,10 @@
+#Accessibility
+#Counting owl:sameAs assertions
+
+
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT (COUNT(*) AS ?totalSameAs)
+WHERE {
+  ?s owl:sameAs ?o .
+}

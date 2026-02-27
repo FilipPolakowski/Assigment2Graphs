@@ -1,0 +1,14 @@
+#Semantic Accuracy - Identify Ontology Contstraints
+#The ontology says the schema:cookTime is schema:Recipe
+#Checking if there is any subject that uses schema:cookTime but is not the schema:Recipe type
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?s ?cookTime
+WHERE {
+  ?s <https://schema.org/cookTime> ?cookTime .
+  FILTER NOT EXISTS { 
+    ?s rdf:type <https://schema.org/Recipe> .
+  }
+}
+ORDER BY ?s

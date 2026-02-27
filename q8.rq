@@ -1,0 +1,19 @@
+#Semantic Accuracy - Identify Ontology Contstraints
+#From the ontology  query to extract the rdfs:domain and rdfs:range for cookTime, prepTime, nutrition, recipeIngredient
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?property ?domain ?range
+WHERE {
+  VALUES ?property {
+    <https://schema.org/cookTime>
+    <https://schema.org/prepTime>
+    <https://schema.org/nutrition>
+    <https://schema.org/recipeIngredient>
+  }
+
+  OPTIONAL { ?property rdfs:domain ?domain . }
+  OPTIONAL { ?property rdfs:range ?range . }
+}
+ORDER BY ?property ?domain ?range

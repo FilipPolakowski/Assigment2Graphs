@@ -1,0 +1,15 @@
+#Range correctness check
+#recipeIngredient
+#Any recipeIngredient value that is not a literal of datatype xsd:string
+
+
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?recipe ?ingredient
+WHERE {
+  ?recipe <https://schema.org/recipeIngredient> ?ingredient .
+  FILTER( !(isLiteral(?ingredient) && DATATYPE(?ingredient) = xsd:string) )
+}
+ORDER BY ?recipe
+
+

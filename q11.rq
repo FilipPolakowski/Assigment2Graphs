@@ -1,0 +1,13 @@
+#Semantic Accuracy - Identify Ontology Contstraints
+#The ontology says the schema:nutrition is schema:Recipe
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?s ?nutrition
+WHERE {
+  ?s <https://schema.org/nutrition> ?nutrition .
+  FILTER NOT EXISTS {
+    ?s rdf:type <https://schema.org/Recipe> .
+  }
+}
+ORDER BY ?s

@@ -1,0 +1,10 @@
+#Range correctness check
+#Check for literal values
+#If nutrition value is a literal, it violates the range.
+
+
+SELECT ?recipe ?nutrition
+WHERE {
+  ?recipe <https://schema.org/nutrition> ?nutrition .
+  FILTER (isLiteral(?nutrition))
+}

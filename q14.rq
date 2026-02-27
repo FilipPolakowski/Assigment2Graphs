@@ -1,0 +1,15 @@
+#Range correctness check
+#Check that nutrition IRIs are typed correctly
+#If nutrition is an IRI but does NOT have rdf:type schema:NutritionInformation.
+
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?recipe ?nutrition
+WHERE {
+  ?recipe <https://schema.org/nutrition> ?nutrition .
+  FILTER (isIRI(?nutrition))
+  FILTER NOT EXISTS {
+    ?nutrition rdf:type <https://schema.org/NutritionInformation> .
+  }
+}

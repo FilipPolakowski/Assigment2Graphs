@@ -1,0 +1,15 @@
+#Accessibility — Internal interlinking:
+#Checking local nodes with zero incoming links
+
+
+SELECT ?node
+WHERE {
+  ?node ?p ?o .
+  FILTER(isIRI(?node))
+  FILTER(STRSTARTS(STR(?node), "http://kg-course/food-nutrition/"))
+  FILTER NOT EXISTS {
+    ?s ?p2 ?node .
+  }
+}
+ORDER BY ?node
+LIMIT 200

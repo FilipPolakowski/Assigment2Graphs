@@ -1,0 +1,13 @@
+#Range correctness check
+#Check for literal values
+#If prepTime value is not a literal, with datatype xsd:duration
+
+
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?recipe ?prepTime
+WHERE {
+  ?recipe <https://schema.org/prepTime> ?prepTime .
+  FILTER( !(isLiteral(?prepTime) && DATATYPE(?prepTime) = xsd:duration) )
+}
+ORDER BY ?recipe
